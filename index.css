@@ -1,0 +1,194 @@
+@import "tailwindcss";
+
+/* Tipografías incluidas en el propio proyecto: el marcador funciona sin conexión. */
+@font-face {
+  font-family: "Figtree";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 300 900;
+  src: url("./assets/fonts/figtree-latin-wght-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Barlow Condensed";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url("./assets/fonts/barlow-condensed-latin-500-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Barlow Condensed";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url("./assets/fonts/barlow-condensed-latin-600-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Barlow Condensed";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url("./assets/fonts/barlow-condensed-latin-700-normal.woff2") format("woff2");
+}
+
+@theme {
+  --font-sans: "Figtree", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Barlow Condensed", "Roboto Condensed", "Arial Narrow", ui-sans-serif, sans-serif;
+
+  /* Azul marino profundo */
+  --color-navy-950: #040816;
+  --color-navy-900: #070d22;
+  --color-navy-850: #0a1330;
+  --color-navy-800: #0f1c42;
+  --color-navy-700: #172a5c;
+  --color-navy-600: #223a78;
+  /* Azul eléctrico / cian */
+  --color-electric: #2f6bff;
+  --color-aqua: #45d9ff;
+  /* Dorado y blancos */
+  --color-gold: #f3c452;
+  --color-ink: #f4f7ff;
+  --color-mist: #9aa9cf;
+  --color-haze: #7385b3;
+  /* Solo para acciones destructivas */
+  --color-coral: #ff8091;
+
+  --ease-soft: cubic-bezier(0.22, 0.8, 0.24, 1);
+
+  --animate-pop: pop 0.5s var(--ease-soft) both;
+  --animate-fade: fade 0.25s ease-out both;
+  --animate-sheet: sheet 0.4s var(--ease-soft) both;
+  --animate-rise: rise 0.35s var(--ease-soft) both;
+  --animate-live: live 1.6s ease-in-out infinite;
+
+  /* Solo escala: los dígitos nunca dejan de verse nítidos */
+  @keyframes pop {
+    0% {
+      transform: scale(0.86);
+    }
+    55% {
+      transform: scale(1.06);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes sheet {
+    from {
+      opacity: 0;
+      transform: translateY(28px) scale(0.985);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes live {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.4;
+      transform: scale(0.78);
+    }
+  }
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background: var(--color-navy-950);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  button {
+    -webkit-tap-highlight-color: transparent;
+    /* Evita el zoom por doble toque al sumar puntos rápido en el móvil */
+    touch-action: manipulation;
+  }
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-aqua);
+    outline-offset: 3px;
+  }
+  ::selection {
+    background: color-mix(in srgb, var(--color-electric) 60%, transparent);
+  }
+}
+
+@layer components {
+  .eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-[0.2em];
+  }
+  .panel {
+    @apply rounded-[2.25rem] bg-navy-900/70 ring-1 ring-white/[0.06];
+  }
+  .btn-round {
+    @apply inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-white/[0.05] text-mist ring-1 ring-white/[0.08] transition duration-200 ease-soft hover:bg-white/10 hover:text-ink active:scale-95 disabled:pointer-events-none disabled:opacity-30;
+  }
+  .btn-pill {
+    @apply inline-flex h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold whitespace-nowrap transition duration-200 ease-soft active:scale-[0.97] disabled:pointer-events-none disabled:opacity-35;
+  }
+  .btn-ghost {
+    @apply bg-white/[0.05] text-ink ring-1 ring-white/[0.08] hover:bg-white/10;
+  }
+  .btn-electric {
+    @apply bg-electric text-white shadow-[0_14px_34px_-14px_rgba(47,107,255,0.95)] hover:brightness-110;
+  }
+  .btn-gold {
+    @apply bg-gold text-navy-950 shadow-[0_14px_34px_-16px_rgba(243,196,82,0.9)] hover:brightness-105;
+  }
+  .btn-danger {
+    @apply bg-coral/15 text-coral ring-1 ring-coral/30 hover:bg-coral/25;
+  }
+  .chip {
+    @apply inline-flex h-6 items-center gap-1.5 rounded-full px-2.5 text-[11px] font-semibold uppercase tracking-[0.12em] ring-1;
+  }
+  .field {
+    @apply h-12 w-full min-w-0 rounded-full bg-navy-950/60 px-5 text-base text-ink ring-1 ring-white/10 outline-none transition duration-200 placeholder:text-haze focus:ring-2 focus:ring-aqua/70;
+  }
+}
+
+.scroll-soft {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(154, 169, 207, 0.28) transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
